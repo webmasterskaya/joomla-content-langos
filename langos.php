@@ -1,11 +1,11 @@
 <?php
 /**
- * @package    joomla-contnent-langs
- *
- * @author     Артём <your@email.com>
- * @copyright  A copyright
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       http://your.url.com
+ * @package    Joomla - Content plugin to show values of language constants in eg an article
+ * @version    1.0.0
+ * @author     Artem Vasilev - Webmasterskaya
+ * @copyright  Copyright (c) 2020 Webmasterskaya. All rights reserved.
+ * @license    GNU General Public License version 3 or later; see LICENSE.txt
+ * @link       https://webmasterskaya.xyz/
  */
 
 use Joomla\CMS\Application\CMSApplication;
@@ -15,10 +15,10 @@ use Joomla\CMS\Plugin\CMSPlugin;
 defined('_JEXEC') or die;
 
 /**
- * Joomla-contnent-langs plugin.
+ * Plug-in to show values of language constants in eg an article
+ * This uses the {langos LANGUAGE_CONSTANT} syntax
  *
- * @package   joomla-contnent-langs
- * @since     1.0.0
+ * @since  3.8.1
  */
 class plgContentLangos extends CMSPlugin
 {
@@ -47,7 +47,7 @@ class plgContentLangos extends CMSPlugin
 	protected $autoloadLanguage = true;
 
 	/**
-	 * onAfterInitialise.
+	 * Plugin that shows a language constant.
 	 *
 	 * @param   string   $context  The context of the content being passed to the plugin.
 	 * @param   object  &$item     The item object.  Note $article->text is also available
@@ -60,7 +60,7 @@ class plgContentLangos extends CMSPlugin
 	 */
 	public function onContentPrepare($context, &$item, &$params, $page = 0)
 	{
-// If the item has a context, overwrite the existing one
+		// If the item has a context, overwrite the existing one
 		if ($context == 'com_finder.indexer' && !empty($item->context))
 		{
 			$context = $item->context;
@@ -86,19 +86,28 @@ class plgContentLangos extends CMSPlugin
 		// Prepare the text
 		if (isset($item->text))
 		{
-			$item->text = $this->prepare($item->text, $context, $item);
+			$item->text = $this->prepare($item->text);
 		}
 
 		// Prepare the intro text
 		if (isset($item->introtext))
 		{
-			$item->introtext = $this->prepare($item->introtext, $context, $item);
+			$item->introtext = $this->prepare($item->introtext);
 		}
 	}
 
-	protected function prepare($string, $context, $item)
+	/**
+	 * Prepares the given string by parsing {langos} groups and replacing them.
+	 *
+	 * @param $string
+	 *
+	 * @return string|null
+	 *
+	 * @since 1.0.0
+	 */
+	protected function prepare($string)
 	{
-		// Search for {field ID} or {fieldgroup ID} tags and put the results into $matches.
+		// Search for {langos} tags and put the results into $matches.
 		$regex = '/{(langos)\s+(.*?)}/i';
 		preg_match_all($regex, $string, $matches, PREG_SET_ORDER);
 

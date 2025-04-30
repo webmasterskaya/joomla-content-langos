@@ -125,6 +125,9 @@ final class Plugin extends CMSPlugin implements SubscriberInterface
 				}
 
 				$string = preg_replace("|$match[0]|", Text::_(strtoupper($match[2])), $string, 1);
+
+				$string = str_replace('%date%', HTMLHelper::_('date', 'now', 'Y'), $string);
+				$string = str_replace('%sitename%', $this->getApplication()->get('sitename', ''), $string);
 			}
 		}
 

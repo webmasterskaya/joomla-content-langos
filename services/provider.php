@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     ${NAMESPACE}
  * @subpackage
@@ -18,19 +19,19 @@ use Joomla\Plugin\Content\Langos\Extension\Plugin;
 \defined('_JEXEC') or die;
 
 return new class () implements ServiceProviderInterface {
-	public function register(Container $container)
-	{
-		$container->set(
-			PluginInterface::class,
-			function (Container $container) {
-				$plugin = new Plugin(
-					$container->get(DispatcherInterface::class),
-					(array)PluginHelper::getPlugin('content', 'langos')
-				);
-				$plugin->setApplication(Factory::getApplication());
+    public function register(Container $container)
+    {
+        $container->set(
+            PluginInterface::class,
+            function (Container $container) {
+                $plugin = new Plugin(
+                    $container->get(DispatcherInterface::class),
+                    (array)PluginHelper::getPlugin('content', 'langos')
+                );
+                $plugin->setApplication(Factory::getApplication());
 
-				return $plugin;
-			}
-		);
-	}
+                return $plugin;
+            }
+        );
+    }
 };

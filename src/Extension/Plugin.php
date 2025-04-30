@@ -10,6 +10,7 @@
 
 namespace Joomla\Plugin\Content\Langos\Extension;
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\Event;
@@ -101,7 +102,7 @@ final class Plugin extends CMSPlugin implements SubscriberInterface
 	protected function prepare(string $string): string
 	{
 		// Search for {langos} tags and put the results into $matches.
-		$regex = '/{(langos)\s+(.*?)}/i';
+		$regex = '/{(langos)\s+([A-Z\d_]+)(?:\s*,\s*(.*?))?}/i';
 		preg_match_all($regex, $string, $matches, PREG_SET_ORDER);
 
 		if (!$matches)
@@ -109,11 +110,21 @@ final class Plugin extends CMSPlugin implements SubscriberInterface
 			return $string;
 		}
 
+		$language = $this->getApplication()->getLanguage();
+
 		foreach ($matches as $match)
 		{
 			if ($match[1] === 'langos' && !empty($match[2]))
 			{
-				$string = preg_replace("|$match[0]|", Text::_(strtoupper(trim($match[2]))), $string, 1);
+				$match[2] = preg_replace('/^\s+/u', '', $match[2]);
+
+				if (!empty($match[3]))
+				{
+					$match[3] = preg_replace('/^\s+/u', '', $match[3]);
+					$language->load($match[3]);
+				}
+
+				$string = preg_replace("|$match[0]|", Text::_(strtoupper($match[2])), $string, 1);
 			}
 		}
 

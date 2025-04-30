@@ -37,6 +37,8 @@ LangOS will now load the correct value from the language file of that specific e
 
 ### 💡 Key Features
 
+- ⚡ Plugin output is cache-friendly, which improves overall site performance
+- 🔁 Fully compatible with Joomla Cache, JotCache and other popular caching solutions
 - 🧩 Insert language constants into any content: articles, modules, etc.
 - 🌐 Fully integrated with Joomla's multilingual system
 - 🔌 Works out of the box with standard content types

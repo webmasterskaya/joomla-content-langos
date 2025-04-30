@@ -25,7 +25,7 @@ jobs:
       - name: Build artifact
         run: |
           export TERM=xterm
-          zip -r plg_content_langos.zip language services src script.php langos.xml"
+          zip -r plg_content_langos.zip language services src script.php langos.xml
 
       - name: Upload artifact
         uses: softprops/action-gh-release@v2

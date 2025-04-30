@@ -28,7 +28,3 @@ A content plugin for inserting language constant values, for example, in an arti
 6. In the text editor, paste the code `{langos LANGUAGE_CONSTANT}` _ (!!! LANGUAGE_CONSTANT should be replaced with the name of the language constant that you created in step # 3) _
 
 For the plugin to work correctly in a module such as HTML, do not forget to enable the option "Processing by plugins" on the tab "Basic parameters", on the module editing page.
-
-### Thank 💰
-
-If you want to get more free extensions - toss a "coin" to the developer on coffee☕ and cookies🍪: https://webmasterskaya.xyz/donate

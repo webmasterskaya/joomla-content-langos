@@ -58,8 +58,7 @@ LangOS will now load the correct value from the language file of that specific e
 
 ### 📦 Installation
 
-1. Download the latest version from the developer site:  
-   [https://webmasterskaya.xyz/products/joomla/plaginy/joomla-content-langos](https://webmasterskaya.xyz/products/joomla/plaginy/joomla-content-langos)
+1. Download the latest version
 2. Go to your Joomla Admin → Extensions → Manage → Install
 3. Upload and install the `.zip` file
 4. After installation, enable the plugin via:  

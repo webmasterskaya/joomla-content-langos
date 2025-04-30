@@ -57,8 +57,7 @@
 
 ### 📦 Установка
 
-1. Скачайте последнюю версию плагина с сайта разработчика:  
-   [https://webmasterskaya.xyz/products/joomla/plaginy/joomla-content-langos](https://webmasterskaya.xyz/products/joomla/plaginy/joomla-content-langos)
+1. Скачайте последнюю версию плагина
 2. Перейдите в панель управления Joomla → Расширения → Менеджер расширений → Установка
 3. Загрузите и установите `.zip` файл
 4. После установки активируйте плагин через:  

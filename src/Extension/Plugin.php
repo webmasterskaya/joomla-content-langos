@@ -8,11 +8,14 @@
  * @link       https://webmasterskaya.xyz/
  */
 
-use Joomla\CMS\Application\CMSApplication;
+namespace Joomla\Plugin\Content\Langos\Extension;
+
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Event\Event;
+use Joomla\Event\SubscriberInterface;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Plug-in to show values of language constants in eg an article
@@ -20,24 +23,8 @@ defined('_JEXEC') or die;
  *
  * @since  3.8.1
  */
-class plgContentLangos extends CMSPlugin
+final class Plugin extends CMSPlugin implements SubscriberInterface
 {
-	/**
-	 * Application object
-	 *
-	 * @var    CMSApplication
-	 * @since  1.0.0
-	 */
-	protected $app;
-
-	/**
-	 * Database object
-	 *
-	 * @var    JDatabaseDriver
-	 * @since  1.0.0
-	 */
-	protected $db;
-
 	/**
 	 * Affects constructor behavior. If true, language files will be loaded automatically.
 	 *
@@ -47,25 +34,34 @@ class plgContentLangos extends CMSPlugin
 	protected $autoloadLanguage = true;
 
 	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return array
+	 *
+	 * @since   2.0.0
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onContentPrepare' => 'onContentPrepare',
+		];
+	}
+
+	/**
 	 * Plugin that shows a language constant.
 	 *
-	 * @param   string   $context  The context of the content being passed to the plugin.
-	 * @param   object  &$item     The item object.  Note $article->text is also available
-	 * @param   object  &$params   The article params
-	 * @param   int      $page     The 'page' number
+	 * @param   Event  $event  The event object
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0.0
 	 */
-	public function onContentPrepare($context, &$item, &$params, $page = 0)
+	public function onContentPrepare(Event $event): void
 	{
+		[$context, $item, $params, $page] = $event->getArguments();
+
 		// If the item has a context, overwrite the existing one
-		if ($context == 'com_finder.indexer' && !empty($item->context))
-		{
-			$context = $item->context;
-		}
-		elseif ($context == 'com_finder.indexer')
+		if ($context === 'com_finder.indexer')
 		{
 			// Don't run this plugin when the content is being indexed and we have no real context
 			return;
@@ -78,16 +74,13 @@ class plgContentLangos extends CMSPlugin
 		}
 
 		// Simple performance check to determine whether bot should process further
-		if (strpos($item->text, 'langos') === false)
+		if (str_contains($item->text, 'langos') === false)
 		{
 			return;
 		}
 
 		// Prepare the text
-		if (isset($item->text))
-		{
-			$item->text = $this->prepare($item->text);
-		}
+		$item->text = $this->prepare($item->text);
 
 		// Prepare the intro text
 		if (isset($item->introtext))
@@ -99,13 +92,13 @@ class plgContentLangos extends CMSPlugin
 	/**
 	 * Prepares the given string by parsing {langos} groups and replacing them.
 	 *
-	 * @param $string
+	 * @param   string  $string  The string to prepare
 	 *
-	 * @return string|null
+	 * @return  string
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 */
-	protected function prepare($string)
+	protected function prepare(string $string): string
 	{
 		// Search for {langos} tags and put the results into $matches.
 		$regex = '/{(langos)\s+(.*?)}/i';
@@ -116,9 +109,9 @@ class plgContentLangos extends CMSPlugin
 			return $string;
 		}
 
-		foreach ($matches as $i => $match)
+		foreach ($matches as $match)
 		{
-			if ($match[1] == 'langos' && !empty($match[2]))
+			if ($match[1] === 'langos' && !empty($match[2]))
 			{
 				$string = preg_replace("|$match[0]|", Text::_(strtoupper(trim($match[2]))), $string, 1);
 			}

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" version="3.8.1" group="content" method="upgrade">
+<extension type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_LANGOS</name>
     <creationDate>15.06.2020</creationDate>
     <author>Artem Vasilev - Webmasterskaya</author>
     <authorEmail>dev@webmasterskaya.xyz</authorEmail>
-    <authorUrl>https://webmasterskaya.xyz/</authorUrl>
-    <copyright>Copyright (c) 2020 Webmasterskaya. All rights reserved.</copyright>
+    <authorUrl>https://webmasterskaya.xyz</authorUrl>
+    <copyright>Copyright (c) 2018–2025 Webmasterskaya. All rights reserved.</copyright>
     <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <description>PLG_CONTENT_LANGOS_XML_DESCRIPTION</description>
+    <namespace path="src">Joomla\Plugin\Content\Langos</namespace>
 
     <scriptfile>script.php</scriptfile>
 
@@ -22,8 +23,8 @@
 
     <!-- Plugin files -->
     <files>
-        <filename plugin="langos">langos.php</filename>
-        <folder>language</folder>
+        <folder plugin="langos">services</folder>
+        <folder>src</folder>
     </files>
 
     <!-- Update servers -->

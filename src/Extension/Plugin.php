@@ -2,7 +2,7 @@
 
 /**
  * @package    Joomla - Content plugin to show values of language constants in eg an article
- * @version    1.0.0
+ * @version    2.0.0
  * @author     Artem Vasilev - Webmasterskaya
  * @copyright  Copyright (c) 2020 Webmasterskaya. All rights reserved.
  * @license    GNU General Public License version 3 or later; see LICENSE.txt
